@@ -1,31 +1,35 @@
-const express = require("express");
-const cors = require("cors");
-const multer = require("multer");
-const nodemailer = require("nodemailer");
-const fs = require("fs");
+import express from "express";
+import cors from "cors";
+import multer from "multer";
+import nodemailer from "nodemailer";
+import fs from "fs";
 
 const app = express();
 const upload = multer({ dest: "uploads/" });
 
 app.use(cors());
+app.use(express.json());
 
 app.post("/send-report", upload.single("pdf"), async (req, res) => {
   try {
     const { email, cc, subject, text } = req.body;
     const file = req.file;
 
-    console.log("📩 ARRIVATA RICHIESTA");
-    console.log(req.body);
+    if (!file) {
+      return res.status(400).json({ error: "File mancante" });
+    }
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.hostinger.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: "info@remach-solutions.it",
-    pass: "Betulle24033)(*"
-  }
-});
+    console.log("📩 ARRIVATA RICHIESTA");
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.hostinger.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "info@remach-solutions.it",
+        pass: "Betulle24033)(*"
+      }
+    });
 
     await transporter.sendMail({
       from: "info@remach-solutions.it",
@@ -50,11 +54,9 @@ const transporter = nodemailer.createTransport({
     res.status(500).json({ error: "Errore invio email" });
   }
 });
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log("Server attivo su", PORT);
 });
-//app.listen(5000, () => {
-  console.log("Server attivo http://localhost:5000");
-//});
