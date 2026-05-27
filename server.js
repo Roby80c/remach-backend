@@ -16,7 +16,14 @@ app.post("/send-report", upload.single("pdf"), async (req, res) => {
   console.log("BODY:", req.body);
   console.log("FILE:", req.file);
   try {
-    const { email, cc, subject, text } = req.body;
+    const email = req.body?.email;
+const cc = req.body?.cc;
+const subject = req.body?.subject;
+const text = req.body?.text;
+if (!email) {
+  console.log("Email mancante:", req.body);
+  return res.status(400).json({ error: "Email mancante" });
+}
     const file = req.file;
 
     if (!file) {
