@@ -13,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.post("/send-report", upload.single("pdf"), async (req, res) => {
+  console.log("HEADERS:", req.headers);
+
   console.log("BODY:", req.body);
   console.log("FILE:", req.file);
   try {
