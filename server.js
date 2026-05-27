@@ -1,7 +1,9 @@
+const { Resend } = require("resend");
+const resend = new Resend("re_YhLtn64f_64AkKg46vX3mmcriWwqXqKNF");
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const nodemailer = require("nodemailer");
+
 const fs = require("fs");
 
 const app = express();
