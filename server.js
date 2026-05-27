@@ -24,17 +24,17 @@ app.post("/send-report", upload.single("pdf"), async (req, res) => {
     console.log("📩 ARRIVATA RICHIESTA");
 
     const transporter = nodemailer.createTransport({
-      host: "smtp.hostinger.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: "info@remach-solutions.it",
-        pass: "Betulle24033)(*"
-      },
-      tls: {
-        rejectUnauthorized: false
-      }
-    });
+  host: "smtp.hostinger.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "info@remach-solutions.it",
+    pass: "Betulle24033)(*"
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
 
     await transporter.sendMail({
       from: "info@remach-solutions.it",
