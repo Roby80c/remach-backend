@@ -1,8 +1,8 @@
-import express from "express";
-import cors from "cors";
-import multer from "multer";
-import nodemailer from "nodemailer";
-import fs from "fs";
+const express = require("express");
+const cors = require("cors");
+const multer = require("multer");
+const nodemailer = require("nodemailer");
+const fs = require("fs");
 
 const app = express();
 const upload = multer({ dest: "uploads/" });
@@ -16,7 +16,9 @@ app.post("/send-report", upload.single("pdf"), async (req, res) => {
     const file = req.file;
 
     if (!file) {
-      return res.status(400).json({ error: "File mancante" });
+      return res.status(400).json({
+        error: "File mancante"
+      });
     }
 
     console.log("📩 ARRIVATA RICHIESTA");
@@ -28,6 +30,9 @@ app.post("/send-report", upload.single("pdf"), async (req, res) => {
       auth: {
         user: "info@remach-solutions.it",
         pass: "Betulle24033)(*"
+      },
+      tls: {
+        rejectUnauthorized: false
       }
     });
 
@@ -50,8 +55,12 @@ app.post("/send-report", upload.single("pdf"), async (req, res) => {
     res.json({ ok: true });
 
   } catch (err) {
+
     console.log("❌ ERRORE:", err);
-    res.status(500).json({ error: "Errore invio email" });
+
+    res.status(500).json({
+      error: "Errore invio email"
+    });
   }
 });
 
