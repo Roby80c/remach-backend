@@ -11,12 +11,13 @@ const upload = multer({ dest: "uploads/" });
 
 app.use(cors());
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 app.post("/send-report", upload.single("pdf"), async (req, res) => {
   console.log("BODY:", req.body);
   console.log("FILE:", req.file);
   try {
-    const email = req.body?.email;
+    const email = req.body?.email?.trim();
+    console.log("BODY RAW:", req.body);
 const cc = req.body?.cc;
 const subject = req.body?.subject;
 const text = req.body?.text;
