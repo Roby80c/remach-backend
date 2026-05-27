@@ -35,7 +35,7 @@ if (!email) {
 
     const fileBuffer = fs.readFileSync(file.path);
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "Remach <info@remach-solutions.it>",
       to: email,
       cc: cc,
@@ -48,6 +48,7 @@ if (!email) {
         }
       ]
     });
+    console.log("RESEND RESULT:", result);
 
     fs.unlinkSync(file.path);
 
